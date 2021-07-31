@@ -18,16 +18,15 @@ const Card = ({item})=>{
 
 const styles = StyleSheet.create ({
     container: {
-        borderRadius: 25
+        borderRadius: 30
     },
     image:{
-        borderRadius:25,
-        width: Dimensions.get('window').width *0.4,
-        height:Dimensions.get('window').height *0.3
+        borderRadius:30,
+        width: Dimensions.get('window').width *0.35,
+        height:Dimensions.get('window').height *0.25
     },
     text:{
-       fontSize: 18,
-       fontWeight:'bold',
+       fontSize: 16,
        color:Colors.white
     }
 })

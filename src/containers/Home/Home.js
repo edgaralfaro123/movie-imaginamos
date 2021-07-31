@@ -28,7 +28,7 @@ const Home = () =>{
 
 const styles = StyleSheet.create({
     title:{
-        fontSize:29,
+        fontSize:25,
         fontWeight:'bold',
         color: Colors.white,
         paddingHorizontal: Dimensions.get('window').width * 0.1,
