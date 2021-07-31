@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text,StyleSheet,View} from 'react-native'
+import {Text,StyleSheet,View,TouchableOpacity, Dimensions} from 'react-native'
 import Card from '../../components/Card'
 import { Colors } from '../../constans/Colors'
 const Home = () =>{
@@ -16,6 +16,9 @@ const Home = () =>{
             <View style={styles.containerCard}>
                 <View style={styles.containertittletext}>
                     <Text style={styles.titletext}>RECOMMENDED FOR YOU</Text>
+                    <TouchableOpacity style={styles.containertitletextT}>
+                        <Text style={styles.titletextT}>See all</Text>
+                    </TouchableOpacity>
                 </View>
                 <Card item={item}/>
             </View>
@@ -25,9 +28,11 @@ const Home = () =>{
 
 const styles = StyleSheet.create({
     title:{
-        fontSize:26,
+        fontSize:29,
         fontWeight:'bold',
-        color: Colors.white
+        color: Colors.white,
+        paddingHorizontal: Dimensions.get('window').width * 0.1,
+        lineHeight: 40
     },
     container:{
         backgroundColor:Colors.bgprimary,
@@ -35,22 +40,33 @@ const styles = StyleSheet.create({
         flexDirection:'column'
     },
     containerHeader:{
-        flex:0.25
+        flex:0.25,
+        justifyContent:'center'
     },
     containerCard:{
         padding:20,
         flex:0.75,
         backgroundColor:Colors.bgsecundary,
-        borderTopEndRadius:40,
-        borderTopLeftRadius:40
+        borderTopEndRadius:30,
+        borderTopLeftRadius:30,
+        marginTop:10
     },
     titletext:{
         color:Colors.white,
         fontWeight:'bold',
-        flex:0.6   
+        flex:0.6
     },
     containertittletext:{
-        flexDirection:'row'
+        flexDirection:'row',
+        marginVertical:20
+    },
+    titletextT:{
+        color:Colors.white,
+        textAlign:'right',
+    },
+    containertitletextT:{
+        flex:0.4,
+        justifyContent:'flex-end'
     }
 })
 
