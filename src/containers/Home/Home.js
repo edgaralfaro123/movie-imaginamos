@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {Text,StyleSheet,View,useColorScheme,TouchableOpacity, Dimensions,FlatList, ScrollView,Image, StatusBar} from 'react-native'
+import {Text,StyleSheet,View,TouchableOpacity, Dimensions,FlatList, ScrollView,Image, StatusBar} from 'react-native'
 import Card from '../../components/Card'
 import { Colors } from '../../constans/Colors'
 import { ColorsDark } from '../../constans/ColorsDark'
@@ -8,9 +8,10 @@ import Search from '../../components/Search';
 import BackFavorite from '../../components/BackFavorite' 
 import Detail from '../../components/Detail'
 import { uriApi,apiKey } from '../../constans/api'
+import { useDarkMode } from 'react-native-dark-mode'
 const Home = () =>{
     const [colores, setColores] = useState(Colors)
-
+    const deviceTheme = useDarkMode()
     const [showView, setShowView] = useState(false)
     const [itemTopRated, setItemTopRated] = useState([])
     const [itemRecommended, setItemRecommended] = useState([])
@@ -53,13 +54,12 @@ const Home = () =>{
     }, [])
 
     const getColors =()=>{
-     /*    const deviceTheme = useColorScheme()
-        console.log('logggg',deviceTheme)
         if(deviceTheme=='light'){
             setColores(Colors)
         }else{
+            console.log('entroo dark');
             setColores(ColorsDark)
-        } */
+        }
         getRecommended(); 
         getTopRated();
     }
