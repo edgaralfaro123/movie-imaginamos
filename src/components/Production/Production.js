@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     container:{
         flexDirection:'row',
         paddingHorizontal: Dimensions.get('window').width * 0.05,
+        paddingTop: 10
     },
     containerType:{
         flex:0.2,

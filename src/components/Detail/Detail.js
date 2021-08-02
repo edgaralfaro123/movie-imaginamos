@@ -10,13 +10,30 @@ import Stars from 'react-native-stars';
 const Detail =({itemDetail,back})=> {
     console.log(itemDetail)
     const [items, setItems] = useState([])
-
+    const [companies, setCompanies] = useState('')
+    const [genres, setGenres] = useState('')
+    const [year, setYear] = useState('')
     const sendRequest = async()=>{
         const query = await fetch(`${uriApi}${itemDetail.id}/credits?api_key=${apiKey}&language=en-US`)
         .then((data) => data.json())
         .then((dataJSON) => {
+            console.log('dataJSON',dataJSON);
+            let arrayCompanies = [];
+            let arrayGenres = [];
+            itemDetail.production_companies.forEach(element => {
+                arrayCompanies.push(element.name)
+            });
+            itemDetail.genres.forEach(element => {
+                arrayGenres.push(element.name)
+            });
+            if(itemDetail.release_date!= undefined){
+               setYear(itemDetail.release_date.split('-')[0])
+            }
+            
+            setGenres(arrayGenres.join(', '))
+            setCompanies(arrayCompanies.join(', '))
             setItems(dataJSON.cast)
-          
+
         })
     }
 
@@ -91,9 +108,9 @@ const Detail =({itemDetail,back})=> {
                     />
                 </View>
                 <View style={styles.containerResumen}>
-                    <Production type='Studio' description='Warner Bros.'/>
-                    <Production type='Genre' description='Action, Adventure, Fantasy'/>
-                    <Production type='Release' description='2018'/>
+                    <Production type='Studio' description={companies}/>
+                    <Production type='Genre' description={genres}/>
+                    <Production type='Release' description={year}/>
                 </View>
                 </ScrollView>
             </View>
@@ -118,6 +135,7 @@ const styles = StyleSheet.create({
     containerTitle:{
         flexDirection:'row',
         flex:0.1,
+        marginTop:Dimensions.get('window').height * 0.03,
         //backgroundColor:'blue',
         width: Dimensions.get('window').width,
         paddingHorizontal: Dimensions.get('window').width * 0.05
@@ -141,7 +159,8 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flex:0.12,
         width: Dimensions.get('window').width,
-        paddingHorizontal: Dimensions.get('window').width * 0.05
+        paddingHorizontal: Dimensions.get('window').width * 0.05,
+        marginTop:Dimensions.get('window').height * 0.01
     },
     containerWatchNow:{
         flex:0.4
@@ -172,6 +191,7 @@ const styles = StyleSheet.create({
     },
     containerCars:{
         flex:0.2,
+        marginTop: Dimensions.get('window').height * 0.01
         //backgroundColor:'red'
 
 
