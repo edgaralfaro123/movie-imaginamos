@@ -59,10 +59,12 @@ const Home = () =>{
                     <Search></Search>
                 </View>
     
-                <ScrollView style={styles.containerCard}>
-                    <ContainerCard title='RECOMMENDED FOR YOU' sendRequest={sendRequest} items={itemRecommended}/>
-                    <ContainerCard title='TOP RATED' sendRequest={sendRequest} items={itemTopRated}/>
-                </ScrollView>
+                <View style={styles.containerCard}>
+                    <ScrollView>
+                        <ContainerCard title='RECOMMENDED FOR YOU' sendRequest={sendRequest} items={itemRecommended}/>
+                        <ContainerCard title='TOP RATED' sendRequest={sendRequest} items={itemTopRated}/>
+                    </ScrollView>
+               </View>
             </View>)
             :  (<View style={styles.containerDetail}>
                     <Detail itemDetail={itemDetail} back={back}/>
@@ -89,12 +91,12 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     containerCard:{
-        flex:0.20,
+        flex:0.8,
         backgroundColor:Colors.bgsecundary,
         borderTopEndRadius:30,
         borderTopLeftRadius:30,
-        paddingTop:40,
-        paddingLeft: Dimensions.get('window').width * 0.07
+        paddingTop:30,
+        paddingLeft: Dimensions.get('window').width * 0.07,
     },
     titletext:{
         color:Colors.white,
