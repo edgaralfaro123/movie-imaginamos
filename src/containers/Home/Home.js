@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         backgroundColor:Colors.bgsecundary,
         borderTopEndRadius:30,
         borderTopLeftRadius:30,
-        paddingTop:20,
+        paddingTop:40,
         paddingLeft: Dimensions.get('window').width * 0.07
     },
     titletext:{
