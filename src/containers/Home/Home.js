@@ -1,13 +1,16 @@
 import React,{useState,useEffect} from 'react'
-import {Text,StyleSheet,View,TouchableOpacity, Dimensions,FlatList, ScrollView,Image, StatusBar} from 'react-native'
+import {Text,StyleSheet,View,useColorScheme,TouchableOpacity, Dimensions,FlatList, ScrollView,Image, StatusBar} from 'react-native'
 import Card from '../../components/Card'
 import { Colors } from '../../constans/Colors'
+import { ColorsDark } from '../../constans/ColorsDark'
 import ContainerCard from '../../components/ContainerCard'
 import Search from '../../components/Search';
 import BackFavorite from '../../components/BackFavorite' 
 import Detail from '../../components/Detail'
 import { uriApi,apiKey } from '../../constans/api'
 const Home = () =>{
+    const [colores, setColores] = useState(Colors)
+
     const [showView, setShowView] = useState(false)
     const [itemTopRated, setItemTopRated] = useState([])
     const [itemRecommended, setItemRecommended] = useState([])
@@ -46,20 +49,31 @@ const Home = () =>{
     }
 
     useEffect(() => {
+        getColors();
+    }, [])
+
+    const getColors =()=>{
+     /*    const deviceTheme = useColorScheme()
+        console.log('logggg',deviceTheme)
+        if(deviceTheme=='light'){
+            setColores(Colors)
+        }else{
+            setColores(ColorsDark)
+        } */
         getRecommended(); 
         getTopRated();
-    }, [])
+    }
 
     return(
         
         !showView ? (
             <View style={styles.container}>  
                  <View style={styles.containerHeader}>
-                    <Text style={styles.title}>Hello, what do you want to watch ?</Text>
+                    <Text style={[styles.title,{color: colores?.white}]}>Hello, what do you want to watch ?</Text>
                     <Search></Search>
                 </View>
     
-                <View style={styles.containerCard}>
+                <View style={[styles.containerCard,{backgroundColor: colores?.bgsecundary}]}>
                     <ScrollView>
                         <ContainerCard title='RECOMMENDED FOR YOU' sendRequest={sendRequest} items={itemRecommended}/>
                         <ContainerCard title='TOP RATED' sendRequest={sendRequest} items={itemTopRated}/>
@@ -77,7 +91,6 @@ const styles = StyleSheet.create({
     title:{
         fontSize:22,
         fontWeight:'bold',
-        color: Colors.white,
         paddingHorizontal: Dimensions.get('window').width * 0.1,
         lineHeight: 40
     },
@@ -92,7 +105,6 @@ const styles = StyleSheet.create({
     },
     containerCard:{
         flex:0.8,
-        backgroundColor:Colors.bgsecundary,
         borderTopEndRadius:30,
         borderTopLeftRadius:30,
         paddingTop:30,
