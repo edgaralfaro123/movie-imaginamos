@@ -9,14 +9,13 @@ import Production from '../Production';
 import { apiKey,uriApi } from '../../constans/api';
 import { useDarkMode } from 'react-native-dark-mode'
 import { favoriteAction } from '../../store/actions/favoriteActions';
-import {useDispatch } from 'react-redux'
+import {useDispatch,useSelector } from 'react-redux'
 
 import Stars from 'react-native-stars';
 const Detail =(props)=> {
     const dispatch = useDispatch()
-    const valores= props.route.params
-    console.log('valores',valores)
-    console.log('props',props)
+    const isSelected = useSelector(state => state.favoriteReducer.data)
+   console.log('isSelected',isSelected)
     const {itemDetail} = props.route.params
     
     console.log(itemDetail)
@@ -26,14 +25,26 @@ const Detail =(props)=> {
     const [year, setYear] = useState('')
     const deviceTheme = useDarkMode();
     const [colores, setColores] = useState(Colors)
+    const [favorite, setFavorite] = useState(false)
 
     const back = ()=>{
         props.navigation.goBack()
     }
 
     const addFavorite =(movie)=>{
-
-        dispatch(favoriteAction({movie}))
+        let data=[]
+        data =isSelected
+        if(!favorite==true){
+            data.push(movie)
+            dispatch(favoriteAction({data: data}))
+            setFavorite(true)
+        }else{
+            console.log('ddd')
+            setFavorite(false)
+            const valueFavorite = isSelected.filter((value)=> value.id != itemDetail.id)
+            dispatch(favoriteAction({data: valueFavorite}))
+        }
+        
     }
 
     const sendRequest = async()=>{
@@ -63,8 +74,16 @@ const Detail =(props)=> {
     useEffect(() => {
         getColors();
         sendRequest();
-       
+        validFavorite();
     }, [])
+
+    const validFavorite= ()=>{
+        const valueFavorite = isSelected.filter((value)=> value.id == itemDetail.id)
+        if(valueFavorite.length>0){
+            setFavorite(true)
+        }
+    }
+    
 
     const getColors =()=>{
         console.log('deviceTheme',deviceTheme)
@@ -80,7 +99,7 @@ const Detail =(props)=> {
     return (
         <View style={[styles.container,{backgroundColor: colores.bgsecundary}]}>
             <StatusBar translucent backgroundColor="transparent" />
-           <BackFavorite back={back}/>
+           <BackFavorite back={back} addFavorite={addFavorite} item={itemDetail} favorite={favorite}/>
            <View style={styles.containerHeader}>
                 <Image
                     resizeMode='cover'

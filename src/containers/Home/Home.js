@@ -8,7 +8,7 @@ import Detail from '../../components/Detail'
 import { uriApi,apiKey } from '../../constans/api'
 import { useDarkMode } from 'react-native-dark-mode'
 import { useSelector } from 'react-redux'
-
+import {useFocusEffect} from '@react-navigation/native';
 const Home = (props) =>{
     const isSelected = useSelector(state => state.favoriteReducer.data)
     console.log('isSelected',isSelected)
@@ -52,9 +52,14 @@ const Home = (props) =>{
         setShowView(false)
     }
 
-    useEffect(() => {
+    useFocusEffect(
+        React.useCallback(() => {
+            getColors();
+        },[])
+      )
+   /*  useEffect(() => {
         getColors();
-    }, [])
+    }, []) */
 
     const getColors =()=>{
         if( deviceTheme == true ){
@@ -77,6 +82,7 @@ const Home = (props) =>{
     
                 <View style={[styles.containerCard,{backgroundColor: colores?.bgsecundary}]}>
                     <ScrollView>
+                        {isSelected.length>0 && ( <ContainerCard title='FAVORITES' sendRequest={sendRequest} items={isSelected}/>)}
                         <ContainerCard title='RECOMMENDED FOR YOU' sendRequest={sendRequest} items={itemRecommended}/>
                         <ContainerCard title='TOP RATED' sendRequest={sendRequest} items={itemTopRated}/>
                     </ScrollView>

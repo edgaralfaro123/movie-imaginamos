@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/dist/Ionicons';
 import { useDarkMode } from 'react-native-dark-mode'
 import { Colors } from '../../constans/Colors';
 import { ColorsDark } from '../../constans/ColorsDark'
-const BackFavorite = ({back})=> {
+const BackFavorite = ({back,addFavorite,item,favorite})=> {
 
   const deviceTheme = useDarkMode();
   const [colores, setColores] = useState(Colors)
@@ -28,8 +28,8 @@ const BackFavorite = ({back})=> {
           </TouchableOpacity>
         </View>
         <View style={{flex:1,justifyContent:'center'}}>
-          <TouchableOpacity style={{alignItems:'flex-end',paddingRight:20}}>
-            <Icon name="heart-outline" size={28} color={`${colores.bgInput}`} />
+          <TouchableOpacity onPress={()=>addFavorite(item)}  style={{alignItems:'flex-end',paddingRight:20}}>
+            {favorite == true ? <Icon name="heart-sharp" size={28} color={`${colores.bgInput}`} /> : <Icon name="heart-outline" size={28} color={`${colores.bgInput}`} />}
           </TouchableOpacity>
         </View> 
     </View>
