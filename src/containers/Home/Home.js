@@ -1,15 +1,17 @@
 import React,{useState,useEffect} from 'react'
-import {Text,StyleSheet,View,TouchableOpacity, Dimensions,FlatList, ScrollView,Image, StatusBar} from 'react-native'
-import Card from '../../components/Card'
+import {Text,StyleSheet,View, Dimensions, ScrollView,Image, StatusBar} from 'react-native'
 import { Colors } from '../../constans/Colors'
 import { ColorsDark } from '../../constans/ColorsDark'
 import ContainerCard from '../../components/ContainerCard'
 import Search from '../../components/Search';
-import BackFavorite from '../../components/BackFavorite' 
 import Detail from '../../components/Detail'
 import { uriApi,apiKey } from '../../constans/api'
 import { useDarkMode } from 'react-native-dark-mode'
+import { useSelector } from 'react-redux'
+
 const Home = () =>{
+    const isSelected = useSelector(state => state.favoriteReducer.data)
+    console.log('isSelected',isSelected)
     const [colores, setColores] = useState(Colors)
     const deviceTheme = useDarkMode()
     const [showView, setShowView] = useState(false)
