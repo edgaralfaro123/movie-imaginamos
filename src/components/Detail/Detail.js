@@ -3,9 +3,13 @@ import {View,Image,StyleSheet, StatusBar, Dimensions,Text,Linking, TouchableOpac
 import BackFavorite from '../BackFavorite'
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { Colors } from '../../constans/Colors';
+import { ColorsDark } from '../../constans/ColorsDark'
 import ListActor from '../ListActor';
 import Production from '../Production';
 import { apiKey,uriApi } from '../../constans/api';
+import { useDarkMode } from 'react-native-dark-mode'
+
+
 import Stars from 'react-native-stars';
 const Detail =({itemDetail,back})=> {
     console.log(itemDetail)
@@ -13,6 +17,9 @@ const Detail =({itemDetail,back})=> {
     const [companies, setCompanies] = useState('')
     const [genres, setGenres] = useState('')
     const [year, setYear] = useState('')
+    const deviceTheme = useDarkMode();
+    const [colores, setColores] = useState(Colors)
+
     const sendRequest = async()=>{
         const query = await fetch(`${uriApi}${itemDetail.id}/credits?api_key=${apiKey}&language=en-US`)
         .then((data) => data.json())
@@ -38,13 +45,24 @@ const Detail =({itemDetail,back})=> {
     }
 
     useEffect(() => {
+        getColors();
         sendRequest();
+       
     }, [])
+
+    const getColors =()=>{
+        console.log('deviceTheme',deviceTheme)
+        if( deviceTheme == true ){
+            setColores(ColorsDark)
+        }else{
+            setColores(Colors)
+        }
+    }
 
 
     
     return (
-        <View style={styles.container}>
+        <View style={[styles.container,{backgroundColor: colores.bgsecundary}]}>
             <StatusBar translucent backgroundColor="transparent" />
            <BackFavorite back={back}/>
            <View style={styles.containerHeader}>
@@ -55,63 +73,62 @@ const Detail =({itemDetail,back})=> {
                 />                
             </View>
             <View style={styles.containerDetail}>
-            <ScrollView >
-                <View style={styles.containerTitle}>
-                    <View style={styles.containerTitleView}>
-                        <Text style={styles.title}>{itemDetail.original_title}</Text>
-                    </View>
-                    <View style={styles.containerFourk}>
-                        <Icon name="video-4k-box" size={25} color={`${Colors.letter}`} />
-                    </View>
-                </View>
-
-                <View style={styles.containerWatch}>
-                    <View style={styles.containerWatchNow}>
-                        <TouchableOpacity onPress={() =>
-                                Linking.openURL(itemDetail.homepage)
-                            } style={styles.watchNow}>
-                            <Text style={styles.textWatchNow}>WATCH NOW</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.containerStairs}>
-                        <View style={styles.containerStair}>
-                            <Stars
-                                default={itemDetail.vote_average/2}
-                                count={5}
-                                half={true}
-                                starSize={50}
-                                fullStar={<Icon name={'star'} style={[styles.myStarStyle]}/>}
-                                emptyStar={<Icon name={'star-outline'} style={[styles.myStarStyle, styles.myEmptyStarStyle]}/>}
-                                halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]}/>}
-                            />
+                <ScrollView>
+                    <View style={styles.containerTitle}>
+                        <View style={styles.containerTitleView}>
+                            <Text style={styles.title}>{itemDetail.original_title}</Text>
+                        </View>
+                        <View style={styles.containerFourk}> 
+                            <Icon name="video-4k-box" size={25} color={`${colores.letter}`} />
                         </View>
                     </View>
-                </View>
-                
-                <View style={styles.containerDescription}>
-                    <View style={{paddingVertical:20,paddingHorizontal: Dimensions.get('window').width * 0.05}}>
-                       
-                            <Text style={{color:Colors.letter,fontSize:Dimensions.get('window').width *0.035,lineHeight: 25}}>{itemDetail.overview}</Text>
-                       
-                    </View>
-                </View>
-                <View style={styles.containerCars}>
 
+                    <View style={styles.containerWatch}>
+                        <View style={styles.containerWatchNow}>
+                            <TouchableOpacity onPress={() =>
+                                    Linking.openURL(itemDetail.homepage)
+                                } style={[styles.watchNow,{backgroundColor: colores.bgButton,}]}>
+                                <Text style={styles.textWatchNow}>WATCH NOW</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.containerStairs}>
+                            <View style={styles.containerStair}>
+                                <Stars
+                                    default={itemDetail.vote_average/2}
+                                    count={5}
+                                    half={true}
+                                    starSize={50}
+                                    fullStar={<Icon name={'star'} style={[styles.myStarStyle]}/>}
+                                    emptyStar={<Icon name={'star-outline'} style={[styles.myStarStyle, styles.myEmptyStarStyle]}/>}
+                                    halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]}/>}
+                                />
+                            </View>
+                        </View>
+                    </View>
                     
-                    <FlatList
-                        horizontal
-                        data={items}
-                        renderItem={({item})=> (
-                            <ListActor item={item}/>
-                        )}
-                        keyExtractor={(_,i) => i}
-                    />
-                </View>
-                <View style={styles.containerResumen}>
-                    <Production type='Studio' description={companies}/>
-                    <Production type='Genre' description={genres}/>
-                    <Production type='Release' description={year}/>
-                </View>
+                    <View style={styles.containerDescription}>
+                        <View style={{paddingVertical:20,paddingHorizontal: Dimensions.get('window').width * 0.05}}>
+                        
+                                <Text style={{color:Colors.letter,fontSize:Dimensions.get('window').width *0.035,lineHeight: 25}}>{itemDetail.overview}</Text>
+                        
+                        </View>
+                    </View>
+                    <View style={styles.containerCars}>
+
+                        <FlatList
+                            horizontal
+                            data={items}
+                            renderItem={({item})=> (
+                                <ListActor item={item}/>
+                            )}
+                            keyExtractor={(_,i) => i}
+                        />
+                    </View>
+                    <View style={styles.containerResumen}>
+                        <Production type='Studio' description={companies}/>
+                        <Production type='Genre' description={genres}/>
+                        <Production type='Release' description={year}/>
+                    </View>
                 </ScrollView>
             </View>
         </View>
@@ -166,7 +183,7 @@ const styles = StyleSheet.create({
         flex:0.4
     },
     watchNow:{
-        backgroundColor: Colors.bgButton,
+        
         justifyContent:'center',
         flex:1,
         borderRadius:30,
@@ -198,7 +215,6 @@ const styles = StyleSheet.create({
     },
     containerResumen:{
         flex:0.2,
-        backgroundColor: Colors.bgsecundary,
         justifyContent:'center',
         paddingBottom:20
     },

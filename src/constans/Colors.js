@@ -4,5 +4,6 @@ export const Colors = {
     letter: '#a6acb2',
     white:'#ffffff',
     bgButton:'#6b737f',
-    bg4k:'#6a727d'
+    bg4k:'#6a727d',
+    bgInput:'#ffffff'
 }

@@ -54,11 +54,10 @@ const Home = () =>{
     }, [])
 
     const getColors =()=>{
-        if(deviceTheme=='light'){
-            setColores(Colors)
-        }else{
-            console.log('entroo dark');
+        if( deviceTheme == true ){
             setColores(ColorsDark)
+        }else{
+            setColores(Colors)
         }
         getRecommended(); 
         getTopRated();
@@ -67,7 +66,7 @@ const Home = () =>{
     return(
         
         !showView ? (
-            <View style={styles.container}>  
+            <View style={[styles.container,{ backgroundColor:colores.bgprimary}]}>  
                  <View style={styles.containerHeader}>
                     <Text style={[styles.title,{color: colores?.white}]}>Hello, what do you want to watch ?</Text>
                     <Search></Search>
@@ -95,7 +94,6 @@ const styles = StyleSheet.create({
         lineHeight: 40
     },
     container:{
-        backgroundColor:Colors.bgprimary,
         flex:1,
         flexDirection:'column'
     },
