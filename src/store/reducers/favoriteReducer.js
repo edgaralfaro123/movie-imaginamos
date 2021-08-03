@@ -1,7 +1,7 @@
 import * as favoriteTypes from '../types'
 
 const initialState = {
-    data: {}
+    data: []
 }
 
 export default function favoriteReducer (state = initialState, action) {

@@ -9,7 +9,7 @@ import { uriApi,apiKey } from '../../constans/api'
 import { useDarkMode } from 'react-native-dark-mode'
 import { useSelector } from 'react-redux'
 
-const Home = () =>{
+const Home = (props) =>{
     const isSelected = useSelector(state => state.favoriteReducer.data)
     console.log('isSelected',isSelected)
     const [colores, setColores] = useState(Colors)
@@ -37,13 +37,14 @@ const Home = () =>{
     }
 
     const sendRequest = async (item)=>{
+        
         console.log('item',item)
         const query = await fetch(`${uriApi}${item.id}?api_key=${apiKey}&language=en-US`)
         .then((data) => data.json())
         .then((dataJSON) => {
-          setItemDetail(dataJSON)
-          setShowView(true)
-          
+            props.navigation.navigate('Detail',{itemDetail:dataJSON})
+            //setItemDetail(dataJSON)
+            //setShowView(true)
         })
     }
 

@@ -5,6 +5,7 @@ import { useDarkMode } from 'react-native-dark-mode'
 import { Colors } from '../../constans/Colors';
 import { ColorsDark } from '../../constans/ColorsDark'
 const BackFavorite = ({back})=> {
+
   const deviceTheme = useDarkMode();
   const [colores, setColores] = useState(Colors)
 

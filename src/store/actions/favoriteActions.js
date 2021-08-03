@@ -1,9 +1,9 @@
-import * as authTypes from '../types'
+import * as favoriteReducer from '../types'
 
-export function favoriteAction (user) {
+export function favoriteAction (movie) {
     return {
-        type: authTypes.FAVORITE,
-        payload: user,
+        type: favoriteReducer.FAVORITE,
+        payload: movie,
     };
 }
 

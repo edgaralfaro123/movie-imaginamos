@@ -8,10 +8,17 @@ import ListActor from '../ListActor';
 import Production from '../Production';
 import { apiKey,uriApi } from '../../constans/api';
 import { useDarkMode } from 'react-native-dark-mode'
-
+import { favoriteAction } from '../../store/actions/favoriteActions';
+import {useDispatch } from 'react-redux'
 
 import Stars from 'react-native-stars';
-const Detail =({itemDetail,back})=> {
+const Detail =(props)=> {
+    const dispatch = useDispatch()
+    const valores= props.route.params
+    console.log('valores',valores)
+    console.log('props',props)
+    const {itemDetail} = props.route.params
+    
     console.log(itemDetail)
     const [items, setItems] = useState([])
     const [companies, setCompanies] = useState('')
@@ -19,6 +26,15 @@ const Detail =({itemDetail,back})=> {
     const [year, setYear] = useState('')
     const deviceTheme = useDarkMode();
     const [colores, setColores] = useState(Colors)
+
+    const back = ()=>{
+        props.navigation.goBack()
+    }
+
+    const addFavorite =(movie)=>{
+
+        dispatch(favoriteAction({movie}))
+    }
 
     const sendRequest = async()=>{
         const query = await fetch(`${uriApi}${itemDetail.id}/credits?api_key=${apiKey}&language=en-US`)
@@ -108,9 +124,7 @@ const Detail =({itemDetail,back})=> {
                     
                     <View style={styles.containerDescription}>
                         <View style={{paddingVertical:20,paddingHorizontal: Dimensions.get('window').width * 0.05}}>
-                        
-                                <Text style={{color:Colors.letter,fontSize:Dimensions.get('window').width *0.035,lineHeight: 25}}>{itemDetail.overview}</Text>
-                        
+                            <Text style={{color:Colors.letter,fontSize:Dimensions.get('window').width *0.035,lineHeight: 25}}>{itemDetail.overview}</Text>
                         </View>
                     </View>
                     <View style={styles.containerCars}>
