@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux'
 import {useFocusEffect} from '@react-navigation/native';
 const Home = (props) =>{
     const isSelected = useSelector(state => state.favoriteReducer.data)
-    console.log('isSelected',isSelected)
     const [colores, setColores] = useState(Colors)
     const deviceTheme = useDarkMode()
     const [showView, setShowView] = useState(false)
@@ -22,7 +21,6 @@ const Home = (props) =>{
         const query = await fetch(`${uriApi}top_rated?api_key=${apiKey}&language=en-US&page=2`)
         .then((data) => data.json())
         .then((dataJSON) => {
-          console.log(dataJSON)
           setItemTopRated(dataJSON.results)
         })
     }
@@ -31,20 +29,15 @@ const Home = (props) =>{
         const query = await fetch(`${uriApi}popular?api_key=${apiKey}&language=en-US&page=1`)
         .then((data) => data.json())
         .then((dataJSON) => {
-          console.log('recommen',dataJSON)
           setItemRecommended(dataJSON.results)
         })
     }
 
     const sendRequest = async (item)=>{
-        
-        console.log('item',item)
         const query = await fetch(`${uriApi}${item.id}?api_key=${apiKey}&language=en-US`)
         .then((data) => data.json())
         .then((dataJSON) => {
             props.navigation.navigate('Detail',{itemDetail:dataJSON})
-            //setItemDetail(dataJSON)
-            //setShowView(true)
         })
     }
 

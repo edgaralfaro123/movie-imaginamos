@@ -15,10 +15,7 @@ import Stars from 'react-native-stars';
 const Detail =(props)=> {
     const dispatch = useDispatch()
     const isSelected = useSelector(state => state.favoriteReducer.data)
-   console.log('isSelected',isSelected)
     const {itemDetail} = props.route.params
-    
-    console.log(itemDetail)
     const [items, setItems] = useState([])
     const [companies, setCompanies] = useState('')
     const [genres, setGenres] = useState('')
@@ -39,7 +36,6 @@ const Detail =(props)=> {
             dispatch(favoriteAction({data: data}))
             setFavorite(true)
         }else{
-            console.log('ddd')
             setFavorite(false)
             const valueFavorite = isSelected.filter((value)=> value.id != itemDetail.id)
             dispatch(favoriteAction({data: valueFavorite}))
@@ -51,7 +47,6 @@ const Detail =(props)=> {
         const query = await fetch(`${uriApi}${itemDetail.id}/credits?api_key=${apiKey}&language=en-US`)
         .then((data) => data.json())
         .then((dataJSON) => {
-            console.log('dataJSON',dataJSON);
             let arrayCompanies = [];
             let arrayGenres = [];
             itemDetail.production_companies.forEach(element => {
@@ -86,7 +81,6 @@ const Detail =(props)=> {
     
 
     const getColors =()=>{
-        console.log('deviceTheme',deviceTheme)
         if( deviceTheme == true ){
             setColores(ColorsDark)
         }else{
@@ -186,7 +180,6 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flex:0.1,
         marginTop:Dimensions.get('window').height * 0.03,
-        //backgroundColor:'blue',
         width: Dimensions.get('window').width,
         paddingHorizontal: Dimensions.get('window').width * 0.05
     },
@@ -197,7 +190,6 @@ const styles = StyleSheet.create({
     },
     containerTitleView:{
         flex:0.9,
-        //backgroundColor:'blue',
         justifyContent:'center'
     },
     title:{
@@ -242,7 +234,6 @@ const styles = StyleSheet.create({
     containerCars:{
         flex:0.2,
         marginTop: Dimensions.get('window').height * 0.01
-        //backgroundColor:'red'
 
 
     },

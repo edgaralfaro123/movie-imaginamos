@@ -35,7 +35,6 @@ const styles = StyleSheet.create ({
     container: {
         borderRadius: 60,
         width:Dimensions.get('window').width *0.37
-        //backgroundColor:'blue'
     },
     image:{
         borderRadius:60,
@@ -45,8 +44,6 @@ const styles = StyleSheet.create ({
     text:{
        fontSize: 12,
        color:Colors.white,
-       //backgroundColor:'red',
-       
        alignContent:'center'
     },
     stair:{
@@ -68,7 +65,6 @@ const styles = StyleSheet.create ({
       containerText:{
         width:Dimensions.get('window').width *0.3,
         height:Dimensions.get('window').height *0.07,
-        //backgroundColor:'red',
         justifyContent:'center'
       }
 
